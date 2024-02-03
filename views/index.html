@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edge Utility</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<h1 class="text-5xl font-bold text-blue-800 dark:text-white mb-5 text-center">Thai Credit Bank Edge Api Utility</h1>
+
+<div class="md:flex">
+    <ul id="tabList"
+        class="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0 whitespace-nowrap">
+        <li>
+            <a href="#" id="aesEncryptTab"
+               class="inline-flex items-center px-4 py-3 text-white bg-blue-700 rounded-lg active w-full dark:bg-blue-600"
+               aria-current="page" onclick="changeTab('aesEncryptTab','tabAesEncrypt')">
+                AES Encrypt
+            </a>
+        </li>
+        <li>
+            <a href="#" id="aesDecryptTab"
+               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+               aria-current="page" onclick="changeTab('aesDecryptTab','tabAesDecrypt')">
+                AES Decrypt
+            </a>
+        </li>
+        <li>
+            <a href="#" id="jsonEscapedTab"
+               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+               onclick="changeTab('jsonEscapedTab','tabJsonEscaped')">
+                Json Escaped
+            </a>
+        </li>
+<!--        <li>-->
+<!--            <a href="#" id="jsonBase64ToImageTab"-->
+<!--               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"-->
+<!--               onclick="changeTab('jsonBase64ToImageTab','tabJsonBase64ToImage')">-->
+<!--                Base64 To Image-->
+<!--            </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <a href="#" id="jsonImageToBase64Tab"-->
+<!--               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"-->
+<!--               onclick="changeTab('jsonImageToBase64Tab','tabJsonImageToBase64')">-->
+<!--                Image To Base64-->
+<!--            </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <a href="#" id="jsonSnakeToCamelTab"-->
+<!--               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"-->
+<!--               onclick="changeTab('jsonSnakeToCamelTab','tabJsonSnakeToCamel')">-->
+<!--                Snake To Camel-->
+<!--            </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <a href="#" id="jsonCamelToSnakeTab"-->
+<!--               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"-->
+<!--               onclick="changeTab('jsonCamelToSnakeTab','tabJsonCamelToSnake')">-->
+<!--                Camel To Snake-->
+<!--            </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <a href="#" id="specialistMakeTab"-->
+<!--               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"-->
+<!--               onclick="changeTab('specialistMakeTab','tabSpecialistMake')">-->
+<!--                Make Specialist With Index-->
+<!--            </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <a href="#" id="specialistDeleteTab"-->
+<!--               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"-->
+<!--               onclick="changeTab('specialistDeleteTab','tabSpecialistDelete')">-->
+<!--                Delete Specialist With ID List-->
+<!--            </a>-->
+<!--        </li>-->
+    </ul>
+
+
+    <!-- Form for AES tab Controller-->
+    <div id="tabAesEncrypt"
+         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
+        {{ template "aes-encrypt-form.html" . }}
+    </div>
+    <div id="tabAesDecrypt"
+         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden">
+        {{ template "aes-decrypt-form.html" . }}
+    </div>
+
+    <!-- Form for Json tab Controller-->
+    <div id="tabJsonEscaped"
+         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden">
+        {{ template "json-escaped-form.html" . }}
+    </div>
+<!--    <div id="tabJsonBase64ToImage"-->
+<!--         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden"-->
+<!--         th:insert="~{json-base64-to-image-form :: content}"></div>-->
+<!--    <div id="tabJsonImageToBase64"-->
+<!--         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden"-->
+<!--         th:insert="~{json-image-to-base64-form :: content}"></div>-->
+<!--    <div id="tabJsonSnakeToCamel"-->
+<!--         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden"-->
+<!--         th:insert="~{json-snake-to-camel-form :: content}"></div>-->
+<!--    <div id="tabJsonCamelToSnake"-->
+<!--         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden"-->
+<!--         th:insert="~{json-camel-to-snake-form :: content}"></div>-->
+
+<!--    &lt;!&ndash; Form for Specialist tab Controller&ndash;&gt;-->
+<!--    <div id="tabSpecialistMake"-->
+<!--         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden"-->
+<!--         th:insert="~{specialist-make-form :: content}"></div>-->
+<!--    <div id="tabSpecialistDelete"-->
+<!--         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden"-->
+<!--         th:insert="~{specialist-delete-form :: content}"></div>-->
+
+</div>
+<script src="/js/script.js"></script>
+</body>
+</html>

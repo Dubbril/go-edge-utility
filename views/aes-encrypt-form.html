@@ -1,0 +1,24 @@
+<h3 class="text-lg font-bold text-orange-500 dark:text-white mb-2 ">AES Encrypt</h3>
+<form id="aesEncryptForm" action="/api/v1/cryptography/aes/encrypt" method="post"
+      onsubmit="submitAesEncryptAndDecryptForm('aesEncryptForm','responseEncryptText')">
+    <label for="key">Key:</label>
+    <input type="text" id="key" name="key" class="border p-2 mb-4 w-full" required>
+
+    <label for="data">Data:</label>
+    <textarea id="data" name="data" class="border p-2 mb-4 w-full h-36"
+              required></textarea>
+
+    <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-lg">Encrypt</button>
+</form>
+
+<!-- Display response if available -->
+<div id="responseEncryptContainer" class="mt-4">
+    <label for="responseEncryptText">Response:</label>
+    <textarea id="responseEncryptText" readonly class="border p-2 w-full h-36" rows="5"
+              ondblclick="copyToClipboard('responseEncryptText')"></textarea>
+</div>
+<div class="mt-4 flex items-center justify-center">
+    <button class="bg-orange-500 text-white px-4 py-2 rounded-lg"
+            onclick="resetFormAndResponseTextarea('aesEncryptForm','responseEncryptText')">Reset
+    </button>
+</div>

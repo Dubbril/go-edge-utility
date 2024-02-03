@@ -1,0 +1,26 @@
+<h3 class="text-lg font-bold text-green-500 dark:text-white mb-2">AES Decrypt</h3>
+<form id="aesDecryptForm" action="/api/v1/cryptography/aes/decrypt" method="post"
+      onsubmit="submitAesEncryptAndDecryptForm('aesDecryptForm','responseDecryptText')">
+    <label for="key">Key:</label>
+    <input type="text" id="key" name="key" class="border p-2 mb-4 w-full" required>
+
+    <label for="data">Data:</label>
+    <textarea id="data" name="data" class="border p-2 mb-4 w-full h-36" required></textarea>
+
+    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg">Decrypt</button>
+</form>
+
+<!-- Display response if available -->
+<div id="responseDecryptContainer" class="mt-4">
+    <label for="responseDecryptText">Response:</label>
+    <textarea id="responseDecryptText" readonly class="border p-2 w-full h-36" rows="5"
+              ondblclick="copyToClipboard('responseDecryptText')"></textarea>
+
+    <!-- Button to format as JSON -->
+    <button onclick="formatAsJson('responseDecryptText')">Format as JSON</button>
+</div>
+<div class="mt-4 flex items-center justify-center">
+    <button class="bg-green-500 text-white px-4 py-2 rounded-lg"
+            onclick="resetFormAndResponseTextarea('aesDecryptForm','responseDecryptText')">Reset
+    </button>
+</div>

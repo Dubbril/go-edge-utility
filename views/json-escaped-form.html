@@ -1,0 +1,21 @@
+<h3 class="text-lg font-bold text-red-500 dark:text-white mb-2 ">Json Escaped</h3>
+<form id="jsonEscapedForm" action="/api/v1/cryptography/json/escaped" method="post"
+      onsubmit="submitJsonTransformForm('jsonEscapedForm','responseJsonEscapedText')">
+    <label for="data">Data:</label>
+    <textarea id="data" name="data" class="border p-2 mb-4 w-full h-36" required></textarea>
+
+    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg">Escaped</button>
+</form>
+
+<!-- Display response if available -->
+<div id="responseJsonEscapedContainer" class="mt-4">
+    <label for="responseJsonEscapedText">Response:</label>
+    <textarea id="responseJsonEscapedText" readonly class="border p-2 w-full h-36" rows="5"
+              ondblclick="copyToClipboard('responseJsonEscapedText')"></textarea>
+</div>
+<div class="mt-4 flex items-center justify-center">
+    <button class="bg-red-500 text-white px-4 py-2 rounded-lg"
+            onclick="resetFormAndResponseTextarea('jsonEscapedForm','responseJsonEscapedText')">Reset
+    </button>
+</div>
+
