@@ -17,6 +17,13 @@ document.getElementById('responseJsonEscapedText').value = '';
 // document.getElementById('responseJsonSnakeToCamelText').value = '';
 // document.getElementById('responseSpecialistMake').value = '';
 
+function generateGUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
 // Action Submit Aes Encrypt & Decrypt
 function submitAesEncryptAndDecryptForm(formId, responseText) {
     this.event.preventDefault();
@@ -28,9 +35,10 @@ function submitAesEncryptAndDecryptForm(formId, responseText) {
         data[key] = value;
     });
 
+    let guid = generateGUID();
     fetch(form.action, {
         method: form.method, headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json', 'x-correlation-id': guid
         }, body: JSON.stringify(data),
     })
         .then(response => response.text())
@@ -54,8 +62,7 @@ function submitSpecialistMakeForm(formId, responseText) {
     });
 
     fetch(form.action, {
-        method: form.method,
-        body: data,
+        method: form.method, body: data,
     })
         .then(response => response.text())
         .then(result => {
@@ -78,8 +85,7 @@ function submitSpecialistDeleteForm(formId) {
     });
 
     fetch(form.action, {
-        method: form.method,
-        body: data,
+        method: form.method, body: data,
     })
         .then(response => response.blob())
         .then(blob => {
