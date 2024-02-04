@@ -1,0 +1,12 @@
+<h3 class="text-lg font-bold text-sky-500 dark:text-white mb-2 ">Base64 To Image</h3>
+<form id="jsonBase64ToImageForm" action="/api/v1/cryptography/json/base64/image" method="post"
+      onsubmit="submitBase64ToImageForm('jsonBase64ToImageForm')">
+    <label for="data">Data:</label>
+    <textarea id="data" name="data" class="border p-2 mb-4 w-full h-96" required></textarea>
+    <div class="mt-4 flex items-center justify-center">
+        <button type="submit" class="bg-sky-500 text-white px-4 py-2 rounded-lg mr-4">Convert To Image</button>
+        <button class="bg-sky-500 text-white px-4 py-2 rounded-lg"
+                onclick="resetFormAndResponseTextarea('jsonBase64ToImageForm',null)">Reset
+        </button>
+    </div>
+</form>

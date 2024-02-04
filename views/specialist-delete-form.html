@@ -1,0 +1,16 @@
+<h3 class="text-lg font-bold text-rose-500 dark:text-white mb-2 ">Delete Specialist With ID List</h3>
+<form id="specialistDeleteForm" action="/api/v1/cryptography/specialist/delete" method="post"
+      onsubmit="submitSpecialistDeleteForm('specialistDeleteForm')">
+    <label for="file">
+        Browse File ... <span class="text-blue-900 font-bold">EIM_EDGE_BLACKLIST_{yyyyMMdd}.txt </span> :
+    </label>
+    <input type="file" id="file" name="file" accept=".txt" class="border p-2 mb-2 w-full" required>
+
+    <label for="deleteId">List Of ID Separated By Comma [ Example -> <span class="text-blue-900 font-bold">13342,072392,15234</span> ] :</label>
+    <textarea id="deleteId" name="deleteId" class="border p-2 mb-2 w-full h-60" required></textarea>
+
+    <button type="submit" class="bg-rose-500 text-white px-4 py-2 rounded-lg w-1/12">Make</button>
+    <button class="bg-rose-500 text-white px-4 py-2 rounded-lg w-1/12"
+            onclick="resetFormAndResponseTextarea('specialistDeleteForm',null)">Reset
+    </button>
+</form>

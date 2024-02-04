@@ -2,19 +2,20 @@
 document.getElementById('aesEncryptForm').reset();
 document.getElementById('aesDecryptForm').reset();
 document.getElementById('jsonEscapedForm').reset();
-// document.getElementById('jsonBase64ToImageForm').reset();
-// document.getElementById('jsonCamelToSnakeForm').reset();
-// document.getElementById('jsonImageToBase64').reset();
-// document.getElementById('jsonSnakeToCamelForm').reset();
-// document.getElementById('specialistDeleteForm').reset();
-// document.getElementById('specialistMakeForm').reset();
+document.getElementById('jsonBase64ToImageForm').reset();
+document.getElementById('jsonCamelToSnakeForm').reset();
+document.getElementById('jsonImageToBase64').reset();
+document.getElementById('jsonSnakeToCamelForm').reset();
+document.getElementById('specialistDeleteForm').reset();
+document.getElementById('specialistMakeForm').reset();
 
 document.getElementById('responseEncryptText').value = '';
 document.getElementById('responseDecryptText').value = '';
 document.getElementById('responseJsonEscapedText').value = '';
-// document.getElementById('responseJsonCamelToSnakeText').value = '';
-// document.getElementById('responseJsonImageToBase64Text').value = '';
-// document.getElementById('responseJsonSnakeToCamelText').value = '';
+document.getElementById('responseJsonCamelToSnakeText').value = '';
+document.getElementById('responseJsonImageToBase64Text').value = '';
+document.getElementById('responseJsonSnakeToCamelText').value = '';
+
 // document.getElementById('responseSpecialistMake').value = '';
 
 function generateGUID() {
@@ -38,7 +39,8 @@ function submitAesEncryptAndDecryptForm(formId, responseText) {
     let guid = generateGUID();
     fetch(form.action, {
         method: form.method, headers: {
-            'Content-Type': 'application/json', 'x-correlation-id': guid
+            'Content-Type': 'application/json',
+            'x-correlation-id': guid
         }, body: JSON.stringify(data),
     })
         .then(response => response.text())
@@ -61,8 +63,12 @@ function submitSpecialistMakeForm(formId, responseText) {
         data.append(key, value)
     });
 
+    let guid = generateGUID();
     fetch(form.action, {
-        method: form.method, body: data,
+        method: form.method,
+        headers: {
+            'x-correlation-id': guid
+        }, body: data,
     })
         .then(response => response.text())
         .then(result => {
@@ -84,8 +90,12 @@ function submitSpecialistDeleteForm(formId) {
         data.append(key, value)
     });
 
+    let guid = generateGUID();
     fetch(form.action, {
-        method: form.method, body: data,
+        method: form.method,
+        headers: {
+            'x-correlation-id': guid
+        }, body: data,
     })
         .then(response => response.blob())
         .then(blob => {
@@ -146,9 +156,11 @@ function submitJsonTransformForm(formId, responseText) {
         dataSend = value;
     });
 
+    let guid = generateGUID();
     fetch(form.action, {
         method: form.method, headers: {
             'Content-Type': 'application/json',
+            'x-correlation-id': guid
         }, body: dataSend,
     })
         .then(response => response.text())
@@ -171,9 +183,11 @@ function submitBase64ToImageForm(formId) {
         dataSend = value;
     });
 
+    let guid = generateGUID();
     fetch(form.action, {
         method: form.method, headers: {
             'Content-Type': 'application/json',
+            'x-correlation-id': guid
         }, body: dataSend,
     }).then(response => response.blob())
         .then(blob => {
@@ -208,9 +222,11 @@ function submitImageToBase64Form(formId, responseText) {
         dataSend = value;
     });
 
+    let guid = generateGUID();
     fetch(form.action, {
         method: form.method, headers: {
             'Content-Type': 'application/json',
+            'x-correlation-id': guid
         }, body: dataSend,
     })
         .then(response => response.text())

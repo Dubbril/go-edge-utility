@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"github.com/Dubbril/go-edge-utility/controllers"
-	"github.com/Dubbril/go-edge-utility/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 	"os/exec"
@@ -42,6 +41,6 @@ func InitHomePage(router *gin.Engine) {
 	router.GET("/favicon.ico", homeController.FaviconHandler)
 
 	// Use the logger middleware
-	router.Use(middleware.LogHandler())
+	//router.Use(middleware.LogHandler())
 
 }

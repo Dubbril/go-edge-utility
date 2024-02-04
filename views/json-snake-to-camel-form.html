@@ -1,0 +1,20 @@
+<h3 class="text-lg font-bold text-pink-500 dark:text-white mb-2 ">Json Snake To Camel</h3>
+<form id="jsonSnakeToCamelForm" action="/api/v1/cryptography/json/snake-to-camel" method="post"
+      onsubmit="submitJsonTransformForm('jsonSnakeToCamelForm','responseJsonSnakeToCamelText')">
+    <label for="data">Data:</label>
+    <textarea id="data" name="data" class="border p-2 mb-4 w-full h-36"
+              required></textarea>
+
+    <button type="submit" class="bg-pink-500 text-white px-4 py-2 rounded-lg">Convert To Camel</button>
+</form>
+
+<!-- Display response if available -->
+<div id="responseJsonSnakeToCamelContainer" class="mt-4">
+    <label for="responseJsonSnakeToCamelText">Response:</label>
+    <textarea id="responseJsonSnakeToCamelText" readonly class="border p-2 w-full h-36" rows="5" ondblclick="copyToClipboard('responseJsonSnakeToCamelText')"></textarea>
+    <!-- Button to format as JSON -->
+    <button onclick="formatAsJson('responseJsonSnakeToCamelText')">Format as JSON</button>
+</div>
+<div class="mt-4 flex items-center justify-center">
+    <button class="bg-pink-500 text-white px-4 py-2 rounded-lg" onclick="resetFormAndResponseTextarea('jsonSnakeToCamelForm','responseJsonSnakeToCamelText')">Reset</button>
+</div>

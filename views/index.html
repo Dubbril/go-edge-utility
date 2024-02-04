@@ -33,48 +33,48 @@
                 Json Escaped
             </a>
         </li>
-<!--        <li>-->
-<!--            <a href="#" id="jsonBase64ToImageTab"-->
-<!--               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"-->
-<!--               onclick="changeTab('jsonBase64ToImageTab','tabJsonBase64ToImage')">-->
-<!--                Base64 To Image-->
-<!--            </a>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--            <a href="#" id="jsonImageToBase64Tab"-->
-<!--               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"-->
-<!--               onclick="changeTab('jsonImageToBase64Tab','tabJsonImageToBase64')">-->
-<!--                Image To Base64-->
-<!--            </a>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--            <a href="#" id="jsonSnakeToCamelTab"-->
-<!--               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"-->
-<!--               onclick="changeTab('jsonSnakeToCamelTab','tabJsonSnakeToCamel')">-->
-<!--                Snake To Camel-->
-<!--            </a>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--            <a href="#" id="jsonCamelToSnakeTab"-->
-<!--               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"-->
-<!--               onclick="changeTab('jsonCamelToSnakeTab','tabJsonCamelToSnake')">-->
-<!--                Camel To Snake-->
-<!--            </a>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--            <a href="#" id="specialistMakeTab"-->
-<!--               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"-->
-<!--               onclick="changeTab('specialistMakeTab','tabSpecialistMake')">-->
-<!--                Make Specialist With Index-->
-<!--            </a>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--            <a href="#" id="specialistDeleteTab"-->
-<!--               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"-->
-<!--               onclick="changeTab('specialistDeleteTab','tabSpecialistDelete')">-->
-<!--                Delete Specialist With ID List-->
-<!--            </a>-->
-<!--        </li>-->
+        <li>
+            <a href="#" id="jsonBase64ToImageTab"
+               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+               onclick="changeTab('jsonBase64ToImageTab','tabJsonBase64ToImage')">
+                Base64 To Image
+            </a>
+        </li>
+        <li>
+            <a href="#" id="jsonImageToBase64Tab"
+               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+               onclick="changeTab('jsonImageToBase64Tab','tabJsonImageToBase64')">
+                Image To Base64
+            </a>
+        </li>
+        <li>
+            <a href="#" id="jsonSnakeToCamelTab"
+               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+               onclick="changeTab('jsonSnakeToCamelTab','tabJsonSnakeToCamel')">
+                Snake To Camel
+            </a>
+        </li>
+        <li>
+            <a href="#" id="jsonCamelToSnakeTab"
+               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+               onclick="changeTab('jsonCamelToSnakeTab','tabJsonCamelToSnake')">
+                Camel To Snake
+            </a>
+        </li>
+        <li>
+            <a href="#" id="specialistMakeTab"
+               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+               onclick="changeTab('specialistMakeTab','tabSpecialistMake')">
+                Make Specialist With Index
+            </a>
+        </li>
+        <li>
+            <a href="#" id="specialistDeleteTab"
+               class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+               onclick="changeTab('specialistDeleteTab','tabSpecialistDelete')">
+                Delete Specialist With ID List
+            </a>
+        </li>
     </ul>
 
 
@@ -93,26 +93,32 @@
          class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden">
         {{ template "json-escaped-form.html" . }}
     </div>
-<!--    <div id="tabJsonBase64ToImage"-->
-<!--         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden"-->
-<!--         th:insert="~{json-base64-to-image-form :: content}"></div>-->
-<!--    <div id="tabJsonImageToBase64"-->
-<!--         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden"-->
-<!--         th:insert="~{json-image-to-base64-form :: content}"></div>-->
-<!--    <div id="tabJsonSnakeToCamel"-->
-<!--         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden"-->
-<!--         th:insert="~{json-snake-to-camel-form :: content}"></div>-->
-<!--    <div id="tabJsonCamelToSnake"-->
-<!--         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden"-->
-<!--         th:insert="~{json-camel-to-snake-form :: content}"></div>-->
+    <div id="tabJsonBase64ToImage"
+         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden">
+        {{ template "json-base64-to-image-form.html" . }}
+    </div>
+    <div id="tabJsonImageToBase64"
+         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden">
+        {{ template "json-image-to-base64-form.html" . }}
+    </div>
+    <div id="tabJsonSnakeToCamel"
+         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden">
+        {{ template "json-snake-to-camel-form.html" . }}
+    </div>
+    <div id="tabJsonCamelToSnake"
+         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden">
+        {{ template "json-camel-to-snake-form.html" . }}
+    </div>
 
-<!--    &lt;!&ndash; Form for Specialist tab Controller&ndash;&gt;-->
-<!--    <div id="tabSpecialistMake"-->
-<!--         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden"-->
-<!--         th:insert="~{specialist-make-form :: content}"></div>-->
-<!--    <div id="tabSpecialistDelete"-->
-<!--         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden"-->
-<!--         th:insert="~{specialist-delete-form :: content}"></div>-->
+    <!-- Form for Specialist tab Controller-->
+    <div id="tabSpecialistMake"
+         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden">
+        {{ template "specialist-make-form.html" . }}
+    </div>
+    <div id="tabSpecialistDelete"
+         class="p-6 bg-gray-50 text-medium text-gray-900 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full hidden">
+        {{ template "specialist-delete-form.html" . }}
+    </div>
 
 </div>
 <script src="/js/script.js"></script>

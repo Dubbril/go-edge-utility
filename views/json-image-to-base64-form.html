@@ -1,0 +1,16 @@
+<h3 class="text-lg font-bold text-lime-500 dark:text-white mb-2 ">Image To Base64</h3>
+<form id="jsonImageToBase64" action="/api/v1/cryptography/json/image/base64" method="post"
+      onsubmit="submitImageToBase64Form('jsonImageToBase64','responseJsonImageToBase64Text')">
+    <label for="data">Browse Image File :</label>
+    <input type="file" id="data" name="data" class="border p-2 mb-4 w-full h-12" required>
+    <button type="submit" class="bg-lime-500 text-white px-4 py-2 rounded-lg">Convert To Base64</button>
+</form>
+
+<!-- Display response if available -->
+<div id="responseJsonImageToBase64Container" class="mt-4">
+    <label for="responseJsonImageToBase64Text">Response:</label>
+    <textarea id="responseJsonImageToBase64Text" readonly class="border p-2 w-full h-64" rows="5" ondblclick="copyToClipboard('responseJsonImageToBase64Text')"></textarea>
+</div>
+<div class="mt-4 flex items-center justify-center">
+    <button class="bg-lime-500 text-white px-4 py-2 rounded-lg" onclick="resetFormAndResponseTextarea('jsonImageToBase64','responseJsonImageToBase64Text')">Reset</button>
+</div>

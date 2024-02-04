@@ -10,9 +10,9 @@ import (
 
 func main() {
 	// Set Gin to release mode to disable debug output
-	gin.SetMode(gin.ReleaseMode)
+	//gin.SetMode(gin.ReleaseMode)
 	// Create a new Gin router
-	router := gin.New()
+	router := gin.Default()
 	config.InitHomePage(router)
 
 	// Register Aes Controller
@@ -25,6 +25,17 @@ func main() {
 	jsonService := services.NewJsonService()
 	jsonController := controllers.NewJsonController(jsonService)
 	router.POST("/api/v1/cryptography/json/escaped", jsonController.EscapedJSON)
+	router.POST("/api/v1/cryptography/json/base64/image", jsonController.Base64ToImage)
+	router.POST("/api/v1/cryptography/json/image/base64", jsonController.ImageToBase64)
+	router.POST("/api/v1/cryptography/json/snake-to-camel", jsonController.JSONSnakeToCamel)
+	router.POST("/api/v1/cryptography/json/camel-to-snake", jsonController.JSONCamelToSnake)
+
+	// Register Json Controller
+	specialistService := services.NewSpecialistService()
+	specialistController := controllers.NewSpecialistController(specialistService)
+	router.GET("/api/v1/cryptography/specialist/download", specialistController.DownloadFile)
+	router.POST("/api/v1/cryptography/specialist/make", specialistController.MakeSpecialist)
+	router.POST("/api/v1/cryptography/specialist/delete", specialistController.DeleteSpecialist)
 
 	// Open browser on start
 	config.OpenBrowser("http://localhost:8083")

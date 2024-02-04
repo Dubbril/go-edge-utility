@@ -1,0 +1,29 @@
+<h3 class="text-lg font-bold text-teal-500 dark:text-white mb-2 ">Make Specialist With Index</h3>
+<form id="specialistMakeForm" action="/api/v1/cryptography/specialist/make" method="post"
+      onsubmit="submitSpecialistMakeForm('specialistMakeForm','responseSpecialistMake')">
+    <div class="p-2 mb-2">
+        <a href="/api/v1/cryptography/specialist/download"
+           class="bg-teal-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">
+            Download Example File Template
+        </a>
+    </div>
+    <div class="p-2 mb-2">
+        <label for="file">Browse File :</label>
+        <input type="file" id="file" name="file" accept=".xlsx" class="border p-2 mb-2 w-1/2" required>
+
+        <label for="index">Index Begin:</label>
+        <input id="index" name="index" class="border p-2 mb-2" required>
+
+        <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-lg">Make</button>
+        <button class="bg-teal-500 text-white px-4 py-2 rounded-lg"
+                onclick="resetFormAndResponseTextarea('specialistMakeForm','responseSpecialistMake')">Reset
+        </button>
+    </div>
+</form>
+
+<!-- Display response if available -->
+<div id="responseSpecialistMakeContainer" class="mt-4">
+    <label for="responseSpecialistMake">Response:</label>
+    <textarea id="responseSpecialistMake" readonly class="border p-2 w-full h-60" rows="5"
+              ondblclick="copyToClipboard('responseSpecialistMake')"></textarea>
+</div>
