@@ -3,17 +3,22 @@ package main
 import (
 	"github.com/Dubbril/go-edge-utility/config"
 	"github.com/Dubbril/go-edge-utility/controllers"
+	"github.com/Dubbril/go-edge-utility/middleware"
 	"github.com/Dubbril/go-edge-utility/services"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
 
 func main() {
+
 	// Set Gin to release mode to disable debug output
-	//gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.ReleaseMode)
 	// Create a new Gin router
-	router := gin.Default()
+	router := gin.New()
 	config.InitHomePage(router)
+
+	// Handle Log Request & Response
+	router.Use(middleware.LogHandler())
 
 	// Register Aes Controller
 	aesService := services.NewAesService()
