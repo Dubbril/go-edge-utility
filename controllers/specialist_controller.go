@@ -133,3 +133,31 @@ func (ctrl *SpecialistController) DownloadFile(c *gin.Context) {
 	c.Header("Content-Disposition", "attachment; filename=Add_Special_list_Datamart.xlsx")
 	c.Data(http.StatusOK, "application/octet-stream", fileContent)
 }
+
+func (ctrl *SpecialistController) FindByCustomerNo(c *gin.Context) {
+	customerNoFilter := c.Query("customerNo")
+	if customerNoFilter == "" {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "CustomerNo is empty"})
+	}
+
+	specialistData, err := ctrl.SpecialistService.FilterByCustomerNo(customerNoFilter)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
+	}
+	c.JSON(http.StatusOK, specialistData)
+}
+
+func (ctrl *SpecialistController) DeleteByIndex(c *gin.Context) {
+	index, err := strconv.Atoi(c.Query("index"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+	}
+
+	err = ctrl.SpecialistService.DeleteByIndex(index)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"status": "Delete Success"})
+}

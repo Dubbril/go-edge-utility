@@ -3,6 +3,7 @@ package services
 import (
 	"bufio"
 	"bytes"
+	"errors"
 	"fmt"
 	"github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/Dubbril/go-edge-utility/models"
@@ -11,6 +12,8 @@ import (
 	"strconv"
 	"strings"
 )
+
+var dataSpecialist *[]models.SpecialistRequest
 
 type SpecialistService struct{}
 
@@ -117,4 +120,99 @@ func (s SpecialistService) DeleteSpecialist(fileContent []byte, deleteIDs map[st
 	}
 
 	return []byte(result.String()), nil
+}
+
+func paginate(specialistSlice []models.SpecialistRequest, page int) ([]models.SpecialistRequest, int) {
+	pageSize := 20
+	totalRecords := len(specialistSlice)
+	totalPages := (totalRecords + pageSize - 1) / pageSize
+
+	startIndex := (page - 1) * pageSize
+	endIndex := page * pageSize
+	if endIndex > totalRecords {
+		endIndex = totalRecords
+	}
+
+	return specialistSlice[startIndex:endIndex], totalPages
+}
+
+func (s SpecialistService) DeleteByIndex(index int) error {
+	if !isEmpty(dataSpecialist) {
+		// Check if the index is valid
+		if index < 0 || index >= len(*dataSpecialist) {
+			return errors.New("index out of range")
+		}
+
+		var slice = *dataSpecialist
+
+		// Use append to create a new slice excluding the element at the specified index
+		data := append(slice[:index], slice[index+1:]...)
+		dataSpecialist = &data
+	}
+
+	return nil
+}
+
+func (s SpecialistService) FilterByCustomerNo(customerNo string) ([]interface{}, error) {
+	filePath := "C:\\Users\\dubbril\\Desktop\\EIM_EDGE_BLACKLIST_20231222.txt"
+	err := readSpecialistFromFile(filePath)
+	if err != nil {
+		return nil, err
+	}
+
+	var responseData []interface{}
+	for index, value := range *dataSpecialist {
+		if customerNo == value.CustomerNo {
+			data := map[string]interface{}{
+				"index": index,
+				"data":  value,
+			}
+			responseData = append(responseData, data)
+
+		}
+	}
+
+	return responseData, nil
+}
+
+// isEmpty checks if a pointer to a slice is empty
+func isEmpty(s *[]models.SpecialistRequest) bool {
+	return s == nil || len(*s) == 0
+}
+
+func readSpecialistFromFile(filePath string) error {
+
+	if !isEmpty(dataSpecialist) {
+		return nil
+	}
+
+	file, err := os.Open(filePath)
+	if err != nil {
+		return err
+	}
+
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			return
+		}
+	}(file)
+
+	scanner := bufio.NewScanner(file)
+	scanner.Scan() // Read and discard the first line
+
+	var specialistReqSlice []models.SpecialistRequest
+	for scanner.Scan() {
+		readLine := scanner.Text()
+		specialistReq := models.NewSpecialistRequest(readLine)
+		specialistReqSlice = append(specialistReqSlice, *specialistReq)
+	}
+
+	if err := scanner.Err(); err != nil {
+		return err
+	}
+
+	dataSpecialist = &specialistReqSlice
+
+	return nil
 }

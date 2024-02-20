@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/Dubbril/go-edge-utility/config"
 	"github.com/Dubbril/go-edge-utility/controllers"
-	"github.com/Dubbril/go-edge-utility/middleware"
 	"github.com/Dubbril/go-edge-utility/services"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
@@ -23,11 +22,11 @@ func main() {
 	// Set Gin to release mode to disable debug output
 	gin.SetMode(gin.ReleaseMode)
 	// Create a new Gin router
-	router := gin.New()
+	router := gin.Default()
 	config.InitHomePage(router)
 
 	// Handle Log Request & Response
-	router.Use(middleware.LogHandler())
+	//router.Use(middleware.LogHandler())
 
 	// Register Aes Controller
 	aesService := services.NewAesService()
@@ -44,12 +43,14 @@ func main() {
 	router.POST("/api/v1/cryptography/json/snake-to-camel", jsonController.JSONSnakeToCamel)
 	router.POST("/api/v1/cryptography/json/camel-to-snake", jsonController.JSONCamelToSnake)
 
-	// Register Json Controller
+	// Register Specialist Controller
 	specialistService := services.NewSpecialistService()
 	specialistController := controllers.NewSpecialistController(specialistService)
 	router.GET("/api/v1/cryptography/specialist/download", specialistController.DownloadFile)
 	router.POST("/api/v1/cryptography/specialist/make", specialistController.MakeSpecialist)
 	router.POST("/api/v1/cryptography/specialist/delete", specialistController.DeleteSpecialist)
+	router.GET("/api/v1/cryptography/specialist/query", specialistController.FindByCustomerNo)
+	router.GET("/api/v1/cryptography/specialist/delete-by-index", specialistController.DeleteByIndex)
 
 	// Open browser on start
 	config.OpenBrowser("http://localhost:8083")
