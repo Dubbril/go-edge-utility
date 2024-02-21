@@ -154,8 +154,7 @@ func (s SpecialistService) DeleteByIndex(index int) error {
 }
 
 func (s SpecialistService) FilterByCustomerNo(customerNo string) ([]interface{}, error) {
-	filePath := "C:\\Users\\dubbril\\Desktop\\EIM_EDGE_BLACKLIST_20231222.txt"
-	err := readSpecialistFromFile(filePath)
+	err := readSpecialistFromFile(sftpInfo.Path)
 	if err != nil {
 		return nil, err
 	}

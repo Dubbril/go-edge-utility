@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"github.com/Dubbril/go-edge-utility/config"
+	"github.com/Dubbril/go-edge-utility/models"
 	"github.com/pkg/sftp"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/crypto/ssh"
@@ -12,7 +13,19 @@ import (
 	"strings"
 )
 
-func DownloadFileFromSftp() {
+var sftpInfo *models.SftpInfo
+
+type SftpClientService struct{}
+
+func NewSftpClientService() *SftpClientService {
+	return &SftpClientService{}
+}
+
+func (s SftpClientService) DownloadLastFileOfSpecialist() (*models.SftpInfo, error) {
+	if sftpInfo != nil {
+		return sftpInfo, nil
+	}
+
 	getConfig := config.GetConfig()
 
 	// Establish an SSH connection
@@ -27,7 +40,7 @@ func DownloadFileFromSftp() {
 	conn, err := ssh.Dial("tcp", fmt.Sprintf("%s:%d", getConfig.Sftp.Host, getConfig.Sftp.Port), configSftp)
 	if err != nil {
 		log.Error().Err(err).Msg("Error connecting to SSH:")
-		return
+		return nil, err
 	}
 	defer func(conn *ssh.Client) {
 		err := conn.Close()
@@ -40,7 +53,7 @@ func DownloadFileFromSftp() {
 	sftpClient, err := sftp.NewClient(conn)
 	if err != nil {
 		log.Error().Err(err).Msg("Error creating SFTP client:")
-		return
+		return nil, err
 	}
 	defer func(sftpClient *sftp.Client) {
 		err := sftpClient.Close()
@@ -53,7 +66,7 @@ func DownloadFileFromSftp() {
 	files, err := sftpClient.ReadDir(getConfig.Sftp.RemoteDir)
 	if err != nil {
 		log.Error().Err(err).Msg("Error listing remote directory:")
-		return
+		return nil, err
 	}
 
 	// Filter files starting with "EIM_EDGE_BLACKLIST"
@@ -79,7 +92,7 @@ func DownloadFileFromSftp() {
 		remoteFile, err := sftpClient.Open(remoteFilePath)
 		if err != nil {
 			log.Error().Err(err).Msg("Error opening remote file:")
-			return
+			return nil, err
 		}
 		defer func(remoteFile *sftp.File) {
 			err := remoteFile.Close()
@@ -92,7 +105,7 @@ func DownloadFileFromSftp() {
 		localFile, err := os.Create(localFilePath)
 		if err != nil {
 			log.Error().Err(err).Msg("Error creating local file:")
-			return
+			return nil, err
 		}
 		defer func(localFile *os.File) {
 			err := localFile.Close()
@@ -105,11 +118,20 @@ func DownloadFileFromSftp() {
 		_, err = io.Copy(localFile, remoteFile)
 		if err != nil {
 			log.Error().Err(err).Msg("Error copying file contents:")
-			return
+			return nil, err
 		}
+
+		sftpInfoData := models.SftpInfo{FileName: latestFile.Name(),
+			Size: latestFile.Size(),
+			Path: localFilePath,
+		}
+
+		sftpInfo = &sftpInfoData
 
 		log.Info().Msgf("Latest file downloaded successfully from %s to %s\n", remoteFilePath, localFilePath)
 	} else {
 		log.Info().Msg("No files found in the remote directory starting with 'EIM_EDGE_BLACKLIST'")
 	}
+
+	return sftpInfo, nil
 }

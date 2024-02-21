@@ -46,6 +46,11 @@ func main() {
 	router.GET("/api/v1/cryptography/specialist/query", specialistController.FindByCustomerNo)
 	router.GET("/api/v1/cryptography/specialist/delete-by-index", specialistController.DeleteByIndex)
 
+	// Register Sftp Client
+	sftpService := services.NewSftpClientService()
+	sftpClientController := controllers.NewSftpClientController(sftpService)
+	router.GET("/api/v1/sftp/client/specialist", sftpClientController.DownloadLastFileOfSpecialist)
+
 	// Open browser on start
 	inits.OpenBrowser("http://localhost:8083")
 
