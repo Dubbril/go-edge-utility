@@ -175,7 +175,6 @@ func (s SpecialistService) FilterByCustomerNo(customerNo string) ([]interface{},
 	return responseData, nil
 }
 
-// isEmpty checks if a pointer to a slice is empty
 func isEmpty(s *[]models.SpecialistRequest) bool {
 	return s == nil || len(*s) == 0
 }

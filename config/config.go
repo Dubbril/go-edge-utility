@@ -2,45 +2,45 @@ package config
 
 import (
 	"fmt"
-	"github.com/Dubbril/go-edge-utility/controllers"
-	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
-	"os/exec"
-	"runtime"
+	"github.com/spf13/viper"
+	"sync"
 )
 
-func OpenBrowser(url string) {
-	var err error
+var (
+	once          sync.Once
+	mappingConfig *MappingConfig
+)
 
-	switch runtime.GOOS {
-	case "linux":
-		err = exec.Command("xdg-open", url).Start()
-	case "windows":
-		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
-	case "darwin":
-		err = exec.Command("open", url).Start()
-	default:
-		err = fmt.Errorf("unsupported platform")
-	}
-	if err != nil {
-		log.Fatal().Err(err).Msg("Cannot open browser")
-	}
-
+type MappingConfig struct {
+	Sftp struct {
+		Host      string `mapstructure:"host"`
+		Port      int    `mapstructure:"port"`
+		Username  string `mapstructure:"username"`
+		Password  string `mapstructure:"password"`
+		RemoteDir string `mapstructure:"remoteDir"`
+		LocalDir  string `mapstructure:"localDir"`
+	} `mapstructure:"sftp"`
 }
 
-func InitHomePage(router *gin.Engine) {
-	// Serve static files from the "static" directory
-	router.LoadHTMLGlob("views/*")
-	router.Static("/static", "./static")
-	router.Static("/css", "static/css")
-	router.Static("/js", "static/js")
+func GetConfig() *MappingConfig {
+	once.Do(func() {
+		mappingConfig = loadConfig()
+	})
 
-	// Register Home Controller
-	homeController := controllers.NewHomeController()
-	router.GET("/", homeController.Index)
-	router.GET("/favicon.ico", homeController.FaviconHandler)
+	return mappingConfig
+}
 
-	// Use the logger middleware
-	//router.Use(middleware.LogHandler())
+func loadConfig() *MappingConfig {
+	viper.SetConfigFile("config.yaml")
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatal().Err(err).Msg("Cannot load bineConfig")
+	}
 
+	var bineConfig MappingConfig
+	if err := viper.Unmarshal(&bineConfig); err != nil {
+		panic(fmt.Errorf("Error unmarshaling config: %s \n", err))
+	}
+
+	return &bineConfig
 }

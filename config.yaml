@@ -1,3 +1,11 @@
+sftp:
+  host: 'localhost'
+  port: 22
+  username: 'dubbril'
+  password: 'bit@1234'
+  remoteDir: '/Users/dubbril/Desktop/remote/'
+  localDir: '/Users/dubbril/Desktop/specialist_data/'
+
 keysToMask:
   - key
   - data

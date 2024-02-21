@@ -2,7 +2,9 @@ package services
 
 import (
 	"fmt"
+	"github.com/Dubbril/go-edge-utility/config"
 	"github.com/pkg/sftp"
+	"github.com/rs/zerolog/log"
 	"golang.org/x/crypto/ssh"
 	"io"
 	"os"
@@ -10,27 +12,21 @@ import (
 	"strings"
 )
 
-func main() {
-	// Replace the following variables with your SFTP connection details
-	host := "192.168.1.17"
-	port := 22
-	username := "dubbril"
-	password := "bit@1234"
-	remoteDir := "/home/dubbril/Desktop/data/"
-	localDir := "C:\\Users\\dubbril\\Desktop\\remote\\"
+func DownloadFileFromSftp() {
+	getConfig := config.GetConfig()
 
 	// Establish an SSH connection
-	configx := &ssh.ClientConfig{
-		User: username,
+	configSftp := &ssh.ClientConfig{
+		User: getConfig.Sftp.Username,
 		Auth: []ssh.AuthMethod{
-			ssh.Password(password),
+			ssh.Password(getConfig.Sftp.Password),
 		},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
-	conn, err := ssh.Dial("tcp", fmt.Sprintf("%s:%d", host, port), configx)
+	conn, err := ssh.Dial("tcp", fmt.Sprintf("%s:%d", getConfig.Sftp.Host, getConfig.Sftp.Port), configSftp)
 	if err != nil {
-		fmt.Println("Error connecting to SSH:", err)
+		log.Error().Err(err).Msg("Error connecting to SSH:")
 		return
 	}
 	defer func(conn *ssh.Client) {
@@ -43,7 +39,7 @@ func main() {
 	// Create an SFTP client
 	sftpClient, err := sftp.NewClient(conn)
 	if err != nil {
-		fmt.Println("Error creating SFTP client:", err)
+		log.Error().Err(err).Msg("Error creating SFTP client:")
 		return
 	}
 	defer func(sftpClient *sftp.Client) {
@@ -54,9 +50,9 @@ func main() {
 	}(sftpClient)
 
 	// List files in the remote directory
-	files, err := sftpClient.ReadDir(remoteDir)
+	files, err := sftpClient.ReadDir(getConfig.Sftp.RemoteDir)
 	if err != nil {
-		fmt.Println("Error listing remote directory:", err)
+		log.Error().Err(err).Msg("Error listing remote directory:")
 		return
 	}
 
@@ -76,13 +72,13 @@ func main() {
 	// Download the latest file
 	if len(filteredFiles) > 0 {
 		latestFile := filteredFiles[0]
-		remoteFilePath := remoteDir + latestFile.Name()
-		localFilePath := localDir + latestFile.Name()
+		remoteFilePath := getConfig.Sftp.RemoteDir + latestFile.Name()
+		localFilePath := getConfig.Sftp.LocalDir + latestFile.Name()
 
 		// Open the remote file for reading
 		remoteFile, err := sftpClient.Open(remoteFilePath)
 		if err != nil {
-			fmt.Println("Error opening remote file:", err)
+			log.Error().Err(err).Msg("Error opening remote file:")
 			return
 		}
 		defer func(remoteFile *sftp.File) {
@@ -95,7 +91,7 @@ func main() {
 		// Create the local file for writing
 		localFile, err := os.Create(localFilePath)
 		if err != nil {
-			fmt.Println("Error creating local file:", err)
+			log.Error().Err(err).Msg("Error creating local file:")
 			return
 		}
 		defer func(localFile *os.File) {
@@ -108,12 +104,12 @@ func main() {
 		// Copy the contents from the remote file to the local file
 		_, err = io.Copy(localFile, remoteFile)
 		if err != nil {
-			fmt.Println("Error copying file contents:", err)
+			log.Error().Err(err).Msg("Error copying file contents:")
 			return
 		}
 
-		fmt.Printf("Latest file downloaded successfully from %s to %s\n", remoteFilePath, localFilePath)
+		log.Info().Msgf("Latest file downloaded successfully from %s to %s\n", remoteFilePath, localFilePath)
 	} else {
-		fmt.Println("No files found in the remote directory starting with 'EIM_EDGE_BLACKLIST'")
+		log.Info().Msg("No files found in the remote directory starting with 'EIM_EDGE_BLACKLIST'")
 	}
 }

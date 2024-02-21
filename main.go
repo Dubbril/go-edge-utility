@@ -1,29 +1,23 @@
 package main
 
 import (
-	"fmt"
 	"github.com/Dubbril/go-edge-utility/config"
+	"github.com/Dubbril/go-edge-utility/config/inits"
 	"github.com/Dubbril/go-edge-utility/controllers"
 	"github.com/Dubbril/go-edge-utility/services"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
-	"github.com/spf13/viper"
 )
 
 func main() {
 
-	// Initialize viper
-	viper.SetConfigFile("config.yaml")
-	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println("Error reading config file:", err)
-		return
-	}
+	config.GetConfig()
 
 	// Set Gin to release mode to disable debug output
 	gin.SetMode(gin.ReleaseMode)
 	// Create a new Gin router
 	router := gin.Default()
-	config.InitHomePage(router)
+	inits.InitHomePage(router)
 
 	// Handle Log Request & Response
 	//router.Use(middleware.LogHandler())
@@ -53,7 +47,7 @@ func main() {
 	router.GET("/api/v1/cryptography/specialist/delete-by-index", specialistController.DeleteByIndex)
 
 	// Open browser on start
-	config.OpenBrowser("http://localhost:8083")
+	inits.OpenBrowser("http://localhost:8083")
 
 	// Run the server on port 8080
 	err := router.Run(":8083")
