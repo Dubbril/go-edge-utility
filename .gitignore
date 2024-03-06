@@ -5,3 +5,6 @@
 /build/
 /dist/
 /out/
+
+### Node Js ###
+node_modules/
