@@ -9,7 +9,7 @@ go get github.com/akavel/rsrc
 go install github.com/akavel/rsrc
 ```
 ```
-rsrc -ico cloud.ico -arch amd64 -o rsrc.syso
+rsrc -ico home.ico -arch amd64 -o rsrc.syso
 ```
 
 - Build For Execute Other Platform
