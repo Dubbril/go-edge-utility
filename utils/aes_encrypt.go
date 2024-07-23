@@ -52,15 +52,18 @@ func DecryptWithBase64Key(encrypted, key string) (string, error) {
 		return "", err
 	}
 
+	// Encrypt each block separately
 	decrypted := make([]byte, len(encryptedBytes))
-	block.Decrypt(decrypted, encryptedBytes)
+	for bs, be := 0, block.BlockSize(); bs < len(encryptedBytes); bs, be = bs+block.BlockSize(), be+block.BlockSize() {
+		block.Decrypt(decrypted[bs:be], encryptedBytes[bs:be])
+	}
 
-	plainText, err := removePKCS7Padding(decrypted)
+	plaintext, err := removePKCS7Padding(decrypted)
 	if err != nil {
 		return "", err
 	}
 
-	return string(plainText), nil
+	return string(plaintext), nil
 }
 
 func EncryptWithHexKey(plainText, key string) (string, error) {
@@ -109,15 +112,18 @@ func DecryptWithHexKey(encrypted, key string) (string, error) {
 		return "", err
 	}
 
+	// Encrypt each block separately
 	decrypted := make([]byte, len(encryptedBytes))
-	block.Decrypt(decrypted, encryptedBytes)
+	for bs, be := 0, block.BlockSize(); bs < len(encryptedBytes); bs, be = bs+block.BlockSize(), be+block.BlockSize() {
+		block.Decrypt(decrypted[bs:be], encryptedBytes[bs:be])
+	}
 
-	plainText, err := removePKCS7Padding(decrypted)
+	plaintext, err := removePKCS7Padding(decrypted)
 	if err != nil {
 		return "", err
 	}
 
-	return string(plainText), nil
+	return string(plaintext), nil
 }
 
 func removePKCS7Padding(data []byte) ([]byte, error) {
